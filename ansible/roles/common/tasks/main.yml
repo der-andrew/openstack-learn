@@ -45,6 +45,8 @@
   copy:
     src: files/sshd_conf
     dest: /etc/ssh
+  notify:
+    - sshd_restart
 
 - name: Conf screenrc
   copy:
