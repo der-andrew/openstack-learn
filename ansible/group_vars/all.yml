@@ -1,0 +1,32 @@
+---
+yum_pkg:
+  - screen
+  - tmux
+  - mc
+  - telnet
+  - tcpdump
+  - man
+  - wget
+  - git
+  - sshpass
+  - rsync
+  - htop
+  - lsof
+  - lshw
+  - iotop
+  - atop
+  - nc
+  - bzip2
+  - zip
+  - unzip
+  - sshuttle
+  - traceroute
+  - mtr
+  - net-tools
+  - conntrack
+  - inotify-tools
+  - multitail
+  - jq
+  - vim
+  - sysstat
+  - dstat

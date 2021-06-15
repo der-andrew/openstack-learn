@@ -1,0 +1,15 @@
+---
+- name: Install yum repo
+  yum:
+    name: epel-release
+    state: present
+  # yum_repository:
+  #   name: epel
+  #   description: EPEL YUM repo
+  #   baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: Install yum pkgs
+  yum:
+    name: "{{ yum_pkg }}"
+    state: present
+    update_cache: yes
