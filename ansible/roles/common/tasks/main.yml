@@ -1,15 +1,36 @@
 ---
+- name: Configure hostname | runtime
+  hostname:
+    name: "{{ var_host_name }}"
+
+- name: Configure hostname | config
+  template:
+    src: templates/hostname.j2
+    dest: /etc/hostname
+
+- name: Configure hosts
+  template:
+    src: templates/hosts.j2
+    dest: /etc/hosts
+
+- name: Disable SELinux | config
+  selinux:
+    state: disabled
+
+- name: Disable SELinux | runtime
+  shell:
+    cmd: setenforce 0
+
 - name: Install yum repo
   yum:
     name: epel-release
     state: present
-  # yum_repository:
-  #   name: epel
-  #   description: EPEL YUM repo
-  #   baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
 
 - name: Install yum pkgs
   yum:
     name: "{{ yum_pkg }}"
     state: present
     update_cache: yes
+  tags:
+    - install_pkgs
+    - never
