@@ -19,7 +19,7 @@
 
 - name: Disable SELinux | runtime
   shell:
-    cmd: setenforce 0
+    cmd: "selinuxenabled && setenforce 0 || true"
 
 - name: Install yum repo
   yum:
@@ -34,3 +34,30 @@
   tags:
     - install_pkgs
     - never
+
+- name: Conf bash_hist
+  copy:
+    src: files/bash_hist.sh
+    dest: /etc/profile.d
+    mode: u+rx
+
+- name: Conf sshd_conf
+  copy:
+    src: files/sshd_conf
+    dest: /etc/ssh
+
+- name: Conf screenrc
+  copy:
+    src: files/screenrc
+    dest: /etc/screenrc
+
+- name: Disable unneccessory services
+  systemd:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  loop:
+    - firewalld
+    - NetworkManager
+    - NetworkManager-dispatcher
+    - NetworkManager-wait-online
