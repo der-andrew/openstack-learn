@@ -5,4 +5,3 @@ export HISTSIZE;
 
 HISTCONTROL="ignoreboth";
 export HISTCONTROL;
-EOF
