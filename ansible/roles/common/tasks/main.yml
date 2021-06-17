@@ -26,6 +26,11 @@
     name: epel-release
     state: present
 
+- name: Install RDO repo
+  yum:
+    name: https://www.rdoproject.org/repos/rdo-release.rpm
+    state: present
+
 - name: Install yum pkgs
   yum:
     name: "{{ yum_pkg }}"
@@ -34,6 +39,12 @@
   tags:
     - install_pkgs
     - never
+
+- name: Enable and start chronyd
+  systemd:
+    name: chronyd
+    enabled: yes
+    state: started
 
 - name: Conf bash_hist
   copy:
