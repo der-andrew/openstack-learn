@@ -1,6 +1,7 @@
 ---
 yum_pkg:
   - chrony
+  - redhat-lsb-core
   - screen
   - tmux
   - mc
@@ -31,3 +32,5 @@ yum_pkg:
   - vim
   - sysstat
   - dstat
+  - dnf
+  - rabbitmq-server

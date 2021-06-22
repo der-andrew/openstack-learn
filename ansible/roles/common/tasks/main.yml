@@ -38,11 +38,22 @@
     update_cache: yes
   tags:
     - install_pkgs
-    - never
+    # - never
+
+- name: Install PackStack
+  yum:
+    name: openstack-packstack
+    state: present
 
 - name: Enable and start chronyd
   systemd:
     name: chronyd
+    enabled: yes
+    state: started
+
+- name: Enable and start rabbitmq
+  systemd:
+    name: rabbitmq-server
     enabled: yes
     state: started
 
@@ -74,3 +85,44 @@
     - NetworkManager
     - NetworkManager-dispatcher
     - NetworkManager-wait-online
+
+### Install openstack from source - BEGIN
+#
+- name: Clone repository of DevStack
+  git:
+    repo: https://github.com/openstack-dev/devstack.git
+    dest: /opt/devstack
+    version: stable/queens
+  ignore_errors: yes
+
+- name: Transfer stackrc
+  template:
+    src: templates/stackrc.j2
+    dest: /opt/devstack/stackrc
+
+- name: Create user stack | chmod create-stack-user.sh
+  file:
+    path: /opt/devstack/tools/create-stack-user.sh
+    mode: u+x
+
+- name: Create user stack | run create-stack-user.sh
+  shell:
+    cmd: /opt/devstack/tools/create-stack-user.sh
+
+- name: Transfer local.conf
+  template:
+    src: templates/local.conf.j2
+    dest: /opt/devstack/local.conf
+
+- name: Create user stack | chmod /opt/devstack
+  file:
+    path: /opt/devstack
+    state: directory
+    owner: stack
+    group: stack
+    recurse: yes
+  # tags:
+  #   - install_openstack
+
+#
+### Install openstack from source - END
