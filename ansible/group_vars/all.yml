@@ -28,9 +28,12 @@ yum_pkg:
   - conntrack
   - inotify-tools
   - multitail
+  - lynx
+  - bash-completion
+  - bash-completion-extras
   - jq
   - vim
   - sysstat
   - dstat
   - dnf
-  - rabbitmq-server
+  # - rabbitmq-server
