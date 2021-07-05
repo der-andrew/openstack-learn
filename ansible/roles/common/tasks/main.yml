@@ -86,6 +86,16 @@
     - NetworkManager-dispatcher
     - NetworkManager-wait-online
 
+- name: Config sysctl
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: yes
+  with_dict: '{{ sysctl_config }}'
+  tags:
+    - install_openstack
+
 ### Install openstack from source - BEGIN
 #
 - name: Clone repository of DevStack

@@ -36,4 +36,6 @@ yum_pkg:
   - sysstat
   - dstat
   - dnf
+  - guestfish
+  - crudini
   # - rabbitmq-server
